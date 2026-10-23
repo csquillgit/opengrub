@@ -192,17 +192,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               const SizedBox(height: 16),
             ],
 
-            // Macro Nutrients Card
-            MacroCard(
-              calories: _product.caloriesServing ?? _product.calories100g,
-              protein: _product.protein100g,
-              carbs: _product.carbs100g,
-              fat: _product.fat100g,
-              fiber: _product.fiber100g,
-              label: _product.servingSize != null
-                  ? 'Per ${_product.servingSize}'
-                  : 'Per 100g',
-            ),
+            // Macro Nutrients Card with interactive Serving / 100g toggle
+            MacroCard(product: _product),
             const SizedBox(height: 20),
 
             // Ingredients Text Section

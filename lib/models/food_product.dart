@@ -12,10 +12,15 @@ class FoodProduct {
   final double? calories100g;
   final double? caloriesServing;
   final double? protein100g;
+  final double? proteinServing;
   final double? carbs100g;
+  final double? carbsServing;
   final double? fat100g;
+  final double? fatServing;
   final double? fiber100g;
+  final double? fiberServing;
   final double? sodium100g;
+  final double? sodiumServing;
   final String? servingSize;
   final DateTime scannedAt;
   final List<FoodFlag> flags;
@@ -31,10 +36,15 @@ class FoodProduct {
     this.calories100g,
     this.caloriesServing,
     this.protein100g,
+    this.proteinServing,
     this.carbs100g,
+    this.carbsServing,
     this.fat100g,
+    this.fatServing,
     this.fiber100g,
+    this.fiberServing,
     this.sodium100g,
+    this.sodiumServing,
     this.servingSize,
     required this.scannedAt,
     this.flags = const [],
@@ -52,10 +62,15 @@ class FoodProduct {
       'calories100g': calories100g,
       'caloriesServing': caloriesServing,
       'protein100g': protein100g,
+      'proteinServing': proteinServing,
       'carbs100g': carbs100g,
+      'carbsServing': carbsServing,
       'fat100g': fat100g,
+      'fatServing': fatServing,
       'fiber100g': fiber100g,
+      'fiberServing': fiberServing,
       'sodium100g': sodium100g,
+      'sodiumServing': sodiumServing,
       'servingSize': servingSize,
       'scannedAt': scannedAt.toIso8601String(),
       'flags': flags.map((f) => f.toMap()).toList(),
@@ -74,10 +89,15 @@ class FoodProduct {
       calories100g: (map['calories100g'] as num?)?.toDouble(),
       caloriesServing: (map['caloriesServing'] as num?)?.toDouble(),
       protein100g: (map['protein100g'] as num?)?.toDouble(),
+      proteinServing: (map['proteinServing'] as num?)?.toDouble(),
       carbs100g: (map['carbs100g'] as num?)?.toDouble(),
+      carbsServing: (map['carbsServing'] as num?)?.toDouble(),
       fat100g: (map['fat100g'] as num?)?.toDouble(),
+      fatServing: (map['fatServing'] as num?)?.toDouble(),
       fiber100g: (map['fiber100g'] as num?)?.toDouble(),
+      fiberServing: (map['fiberServing'] as num?)?.toDouble(),
       sodium100g: (map['sodium100g'] as num?)?.toDouble(),
+      sodiumServing: (map['sodiumServing'] as num?)?.toDouble(),
       servingSize: map['servingSize'] as String?,
       scannedAt: map['scannedAt'] != null
           ? DateTime.parse(map['scannedAt'] as String)
