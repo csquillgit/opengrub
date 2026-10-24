@@ -17,8 +17,10 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateStr = DateFormat('MMM d, h:mm a').format(product.scannedAt);
     final hasFlags = product.flags.isNotEmpty;
+    final cal = product.caloriesServing ?? product.calories100g;
+    final calText = cal != null ? '${cal.round()} kcal' : null;
+    final timeText = _formatDate(product.scannedAt);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -139,9 +141,9 @@ class ProductCard extends StatelessWidget {
                       // Calories & Timestamp Row
                       Row(
                         children: [
-                          if (product.calories100g != null) ...[
+                          if (calText != null) ...[
                             Text(
-                              '${product.calories100g!.round()} kcal/100g',
+                              calText,
                               style: const TextStyle(
                                 color: Color(0xFF38BDF8),
                                 fontSize: 11,
@@ -150,15 +152,11 @@ class ProductCard extends StatelessWidget {
                             ),
                             const Text(' • ', style: TextStyle(color: Color(0xFF64748B))),
                           ],
-                          Expanded(
-                            child: Text(
-                              dateStr,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Color(0xFF64748B),
-                                fontSize: 11,
-                              ),
+                          Text(
+                            timeText,
+                            style: const TextStyle(
+                              color: Color(0xFF64748B),
+                              fontSize: 11,
                             ),
                           ),
                         ],
@@ -207,5 +205,17 @@ class ProductCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime dt) {
+    final now = DateTime.now();
+    final diff = now.difference(dt);
+    if (diff.inMinutes < 60) {
+      return diff.inMinutes <= 1 ? 'Just now' : '${diff.inMinutes}m ago';
+    } else if (diff.inHours < 24 && dt.day == now.day) {
+      return DateFormat('h:mm a').format(dt);
+    } else {
+      return DateFormat('MMM d').format(dt);
+    }
   }
 }
