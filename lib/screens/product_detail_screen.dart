@@ -107,7 +107,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        NovaChip(novaGroup: _product.novaGroup),
+                        NovaChip(novaGroup: _product.novaGroup, compact: true),
                         const SizedBox(height: 8),
                         Text(
                           _product.name,

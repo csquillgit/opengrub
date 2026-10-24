@@ -60,8 +60,8 @@ class NovaChip extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: compact ? 8 : 10,
-        vertical: compact ? 3 : 4,
+        horizontal: compact ? 9 : 10,
+        vertical: compact ? 3.5 : 4,
       ),
       decoration: BoxDecoration(
         color: color.withOpacity(0.18),
@@ -72,22 +72,20 @@ class NovaChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: compact ? 6 : 7,
-            height: compact ? 6 : 7,
+            width: 7,
+            height: 7,
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
-          SizedBox(width: compact ? 5 : 6),
-          Flexible(
-            child: Text(
-              compact ? label : '$label • $tag',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: color,
-                fontSize: compact ? 10.5 : 11.5,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
-              ),
+          const SizedBox(width: 6),
+          Text(
+            compact ? label : '$label • $tag',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: color,
+              fontSize: 11.5,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 0.4,
             ),
           ),
         ],
