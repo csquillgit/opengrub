@@ -126,29 +126,52 @@ class FoodApiService {
     // Calories
     final cal100g = (nutriments['energy-kcal_100g'] as num?)?.toDouble() ??
         (nutriments['energy-kcal'] as num?)?.toDouble();
-    final calServing = (nutriments['energy-kcal_serving'] as num?)?.toDouble();
+    var calServing = (nutriments['energy-kcal_serving'] as num?)?.toDouble();
 
     // Protein
     final protein100g = (nutriments['proteins_100g'] as num?)?.toDouble() ??
         (nutriments['proteins'] as num?)?.toDouble();
+    var proteinServing = (nutriments['proteins_serving'] as num?)?.toDouble();
 
     // Carbs
     final carbs100g = (nutriments['carbohydrates_100g'] as num?)?.toDouble() ??
         (nutriments['carbohydrates'] as num?)?.toDouble();
+    var carbsServing = (nutriments['carbohydrates_serving'] as num?)?.toDouble();
 
     // Fat
     final fat100g = (nutriments['fat_100g'] as num?)?.toDouble() ??
         (nutriments['fat'] as num?)?.toDouble();
+    var fatServing = (nutriments['fat_serving'] as num?)?.toDouble();
 
     // Fiber
     final fiber100g = (nutriments['fiber_100g'] as num?)?.toDouble() ??
         (nutriments['fiber'] as num?)?.toDouble();
+    var fiberServing = (nutriments['fiber_serving'] as num?)?.toDouble();
 
     // Sodium
     final sodium100g = (nutriments['sodium_100g'] as num?)?.toDouble() ??
         (nutriments['sodium'] as num?)?.toDouble();
+    var sodiumServing = (nutriments['sodium_serving'] as num?)?.toDouble();
 
     final servingSize = map['serving_size'] as String?;
+    final servingQuantity = (map['serving_quantity'] as num?)?.toDouble();
+
+    // If serving-specific macros are missing, calculate them from 100g ratio if known
+    double? ratio;
+    if (servingQuantity != null && servingQuantity > 0) {
+      ratio = servingQuantity / 100.0;
+    } else if (calServing != null && cal100g != null && cal100g > 0) {
+      ratio = calServing / cal100g;
+    }
+
+    if (ratio != null) {
+      proteinServing ??= protein100g != null ? protein100g * ratio : null;
+      carbsServing ??= carbs100g != null ? carbs100g * ratio : null;
+      fatServing ??= fat100g != null ? fat100g * ratio : null;
+      fiberServing ??= fiber100g != null ? fiber100g * ratio : null;
+      sodiumServing ??= sodium100g != null ? sodium100g * ratio : null;
+      calServing ??= cal100g != null ? cal100g * ratio : null;
+    }
 
     // Analyze ingredients for flags
     final flags = analyzeIngredients(ingredients ?? '');
@@ -164,10 +187,15 @@ class FoodApiService {
       calories100g: cal100g,
       caloriesServing: calServing,
       protein100g: protein100g,
+      proteinServing: proteinServing,
       carbs100g: carbs100g,
+      carbsServing: carbsServing,
       fat100g: fat100g,
+      fatServing: fatServing,
       fiber100g: fiber100g,
+      fiberServing: fiberServing,
       sodium100g: sodium100g,
+      sodiumServing: sodiumServing,
       servingSize: servingSize,
       scannedAt: DateTime.now(),
       flags: flags,

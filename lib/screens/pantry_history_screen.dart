@@ -151,17 +151,41 @@ class _PantryHistoryScreenState extends State<PantryHistoryScreen> {
             ),
           ),
 
-          // 2. Overview Stats Chips
+          // 2. Overview Stats Dashboard Bar (Balanced 3-column layout)
           if (total > 0)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E293B),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: const Color(0xFF334155)),
+              ),
               child: Row(
                 children: [
-                  _buildStatBadge('$total Scanned', const Color(0xFF38BDF8)),
-                  const SizedBox(width: 8),
-                  _buildStatBadge('$ultraCount Ultra-Processed', const Color(0xFFEF4444)),
-                  const SizedBox(width: 8),
-                  _buildStatBadge('$cleanCount Whole Foods', const Color(0xFF10B981)),
+                  Expanded(
+                    child: _buildSummaryMetric(
+                      count: total.toString(),
+                      label: 'Scanned',
+                      color: const Color(0xFF38BDF8),
+                    ),
+                  ),
+                  Container(width: 1, height: 26, color: const Color(0xFF334155)),
+                  Expanded(
+                    child: _buildSummaryMetric(
+                      count: ultraCount.toString(),
+                      label: 'NOVA 4',
+                      color: const Color(0xFFEF4444),
+                    ),
+                  ),
+                  Container(width: 1, height: 26, color: const Color(0xFF334155)),
+                  Expanded(
+                    child: _buildSummaryMetric(
+                      count: cleanCount.toString(),
+                      label: 'Whole Food',
+                      color: const Color(0xFF10B981),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -217,7 +241,7 @@ class _PantryHistoryScreenState extends State<PantryHistoryScreen> {
                     ),
                   )
                 : ListView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.only(top: 4, bottom: 84),
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final product = filtered[index];
@@ -243,18 +267,32 @@ class _PantryHistoryScreenState extends State<PantryHistoryScreen> {
     );
   }
 
-  Widget _buildStatBadge(String label, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.bold),
-      ),
+  Widget _buildSummaryMetric({
+    required String count,
+    required String label,
+    required Color color,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          count,
+          style: TextStyle(
+            color: color,
+            fontSize: 18,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF94A3B8),
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
     );
   }
 
