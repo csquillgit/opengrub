@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../models/food_product.dart';
 import '../services/pantry_storage_service.dart';
@@ -86,10 +87,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       height: 80,
                       color: const Color(0xFF0F172A),
                       child: _product.imageUrl != null && _product.imageUrl!.isNotEmpty
-                          ? Image.network(
-                              _product.imageUrl!,
+                          ? CachedNetworkImage(
+                              imageUrl: _product.imageUrl!,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const Icon(
+                              memCacheWidth: 200,
+                              placeholder: (_, __) => const Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Color(0xFF38BDF8),
+                                  ),
+                                ),
+                              ),
+                              errorWidget: (_, __, ___) => const Icon(
                                 Icons.fastfood_rounded,
                                 color: Color(0xFF64748B),
                                 size: 36,
