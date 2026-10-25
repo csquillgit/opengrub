@@ -1,6 +1,8 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import '../models/food_product.dart';
 import '../services/food_api_service.dart';
 import '../services/pantry_storage_service.dart';
 import '../widgets/scanner_hud_overlay.dart';
@@ -64,6 +66,16 @@ class _ScannerScreenState extends State<ScannerScreen> {
     });
 
     if (product != null) {
+      final imageUrl = product.imageUrl;
+      if (imageUrl != null && imageUrl.isNotEmpty) {
+        unawaited(
+          precacheImage(
+            CachedNetworkImageProvider(imageUrl, maxWidth: 200),
+            context,
+          ),
+        );
+      }
+
       await widget.storageService.saveProduct(product);
       if (!mounted) return;
 
