@@ -232,10 +232,18 @@ class _PantryHistoryScreenState extends State<PantryHistoryScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 6),
-                        const Text(
-                          'Scan barcodes to build your offline pantry history.',
-                          style: TextStyle(color: Color(0xFF64748B), fontSize: 13),
+                        const SizedBox(height: 8),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 36.0),
+                          child: Text(
+                            'Scan barcodes to build your offline pantry history.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF64748B),
+                              fontSize: 13,
+                              height: 1.4,
+                            ),
+                          ),
                         ),
                       ],
                     ),
