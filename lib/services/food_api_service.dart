@@ -116,7 +116,13 @@ class FoodApiService {
   static FoodProduct _parseProduct(String barcode, Map<String, dynamic> map) {
     final name = (map['product_name'] as String?)?.trim();
     final brand = (map['brands'] as String?)?.trim() ?? '';
-    final imageUrl = map['image_url'] as String? ?? map['image_front_url'] as String?;
+    // Prefer optimized CDN image (~30KB vs 5MB uncompressed original)
+    final imageUrl = map['image_front_small_url'] as String? ??
+        map['image_small_url'] as String? ??
+        map['image_front_thumb_url'] as String? ??
+        map['image_thumb_url'] as String? ??
+        map['image_front_url'] as String? ??
+        map['image_url'] as String?;
     final ingredients = map['ingredients_text'] as String?;
     final nova = (map['nova_group'] as num?)?.toInt();
     final nutri = (map['nutriscore_grade'] as String?)?.toLowerCase();

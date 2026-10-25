@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/food_product.dart';
@@ -52,10 +53,21 @@ class ProductCard extends StatelessWidget {
                     height: 56,
                     color: const Color(0xFF0F172A),
                     child: product.imageUrl != null && product.imageUrl!.isNotEmpty
-                        ? Image.network(
-                            product.imageUrl!,
+                        ? CachedNetworkImage(
+                            imageUrl: product.imageUrl!,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(
+                            memCacheWidth: 150,
+                            placeholder: (_, __) => const Center(
+                              child: SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Color(0xFF38BDF8),
+                                ),
+                              ),
+                            ),
+                            errorWidget: (_, __, ___) => const Icon(
                               Icons.fastfood_rounded,
                               color: Color(0xFF64748B),
                               size: 26,
