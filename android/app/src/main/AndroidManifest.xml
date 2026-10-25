@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.opengrub">
+    package="com.csquillgit.opengrub">
 
     <!-- Camera & Internet Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
