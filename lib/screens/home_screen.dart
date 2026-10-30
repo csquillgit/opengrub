@@ -26,7 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          ScannerScreen(storageService: widget.storageService),
+          ScannerScreen(
+            storageService: widget.storageService,
+            isActive: _currentIndex == 0,
+          ),
           PantryHistoryScreen(storageService: widget.storageService),
           const GuideScreen(),
         ],
