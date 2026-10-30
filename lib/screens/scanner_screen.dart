@@ -10,17 +10,20 @@ import 'product_detail_screen.dart';
 
 class ScannerScreen extends StatefulWidget {
   final PantryStorageService storageService;
+  final bool isActive;
 
   const ScannerScreen({
     super.key,
     required this.storageService,
+    this.isActive = true,
   });
 
   @override
   State<ScannerScreen> createState() => _ScannerScreenState();
 }
 
-class _ScannerScreenState extends State<ScannerScreen> {
+class _ScannerScreenState extends State<ScannerScreen>
+    with WidgetsBindingObserver {
   final MobileScannerController _controller = MobileScannerController(
     detectionSpeed: DetectionSpeed.normal,
     facing: CameraFacing.back,
@@ -32,13 +35,77 @@ class _ScannerScreenState extends State<ScannerScreen> {
   String? _lastScannedBarcode;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant ScannerScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isActive != widget.isActive) {
+      if (widget.isActive) {
+        _startScanner();
+      } else {
+        _stopScanner();
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!mounted) return;
+    if (state == AppLifecycleState.resumed) {
+      if (widget.isActive) {
+        _startScanner();
+      }
+    } else if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      _stopScanner();
+    }
+  }
+
+  Future<void> _startScanner() async {
+    if (!mounted) return;
+    setState(() {
+      _isScanning = true;
+      _lastScannedBarcode = null;
+    });
+
+    if (!_controller.value.isRunning && !_controller.value.isStarting) {
+      try {
+        await _controller.start();
+      } catch (e) {
+        debugPrint('Error starting scanner: $e');
+      }
+    }
+  }
+
+  Future<void> _stopScanner() async {
+    if (!mounted) return;
+    setState(() {
+      _isScanning = false;
+    });
+
+    if (_controller.value.isRunning) {
+      try {
+        await _controller.stop();
+      } catch (e) {
+        debugPrint('Error stopping scanner: $e');
+      }
+    }
+  }
+
   void _onDetect(BarcodeCapture capture) {
-    if (!_isScanning || _isLoading) return;
+    if (!widget.isActive || !_isScanning || _isLoading) return;
 
     final List<Barcode> barcodes = capture.barcodes;
     for (final barcode in barcodes) {
@@ -103,7 +170,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
     // Resume scanning after brief cooldown
     Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
+      if (mounted && widget.isActive) {
         setState(() {
           _isScanning = true;
           _lastScannedBarcode = null;
@@ -112,9 +179,10 @@ class _ScannerScreenState extends State<ScannerScreen> {
     });
   }
 
-  void _showManualEntryDialog() {
+  Future<void> _showManualEntryDialog() async {
+    setState(() => _isScanning = false);
     final textController = TextEditingController();
-    showDialog(
+    await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF1E293B),
@@ -186,6 +254,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
         ],
       ),
     );
+    if (mounted && widget.isActive && !_isLoading) {
+      setState(() => _isScanning = true);
+    }
   }
 
   Widget _buildDemoBarcodeChip(
