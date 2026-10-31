@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/tactical_legal_sheet.dart';
 
 class GuideScreen extends StatelessWidget {
   const GuideScreen({super.key});
@@ -19,6 +20,36 @@ class GuideScreen extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert_rounded, color: Color(0xFF94A3B8)),
+            color: const Color(0xFF1E293B),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: const BorderSide(color: Color(0xFF334155)),
+            ),
+            onSelected: (value) {
+              if (value == 'legal') {
+                TacticalLegalSheet.show(context, openGrubLegal);
+              }
+            },
+            itemBuilder: (ctx) => [
+              const PopupMenuItem(
+                value: 'legal',
+                child: Row(
+                  children: [
+                    Icon(Icons.shield_outlined, color: Color(0xFF10B981), size: 18),
+                    SizedBox(width: 10),
+                    Text(
+                      'Legal & Advisory',
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -117,6 +148,50 @@ class GuideScreen extends StatelessWidget {
               content: 'Synthetic dyes derived from petroleum. Banned or required to carry warning labels in the European Union ("may have an adverse effect on activity and attention in children"), yet ubiquitous in US cereals, snacks, and drinks.',
             ),
             const SizedBox(height: 24),
+            // Legal & Medical Disclaimer Card
+            InkWell(
+              onTap: () => TacticalLegalSheet.show(context, openGrubLegal),
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E293B),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: const Color(0xFFF59E0B).withOpacity(0.5)),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.shield_outlined, color: Color(0xFFF59E0B), size: 22),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'About & Safety Advisory',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Open Food Facts attribution, terms, and health disclaimers',
+                            style: TextStyle(
+                              color: Color(0xFF94A3B8),
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right, color: Color(0xFF94A3B8), size: 20),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
           ],
         ),
       ),
