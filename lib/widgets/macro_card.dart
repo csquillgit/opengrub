@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../models/food_product.dart';
 
 class MacroCard extends StatefulWidget {
   final FoodProduct product;
 
-  const MacroCard({
-    super.key,
-    required this.product,
-  });
+  const MacroCard({super.key, required this.product});
 
   @override
   State<MacroCard> createState() => _MacroCardState();
@@ -20,7 +18,8 @@ class _MacroCardState extends State<MacroCard> {
   void initState() {
     super.initState();
     // Default to serving if serving data exists, else 100g
-    _showServing = widget.product.caloriesServing != null ||
+    _showServing =
+        widget.product.caloriesServing != null ||
         widget.product.carbsServing != null ||
         widget.product.proteinServing != null;
   }
@@ -29,7 +28,8 @@ class _MacroCardState extends State<MacroCard> {
   Widget build(BuildContext context) {
     final p = widget.product;
 
-    final hasServingData = p.caloriesServing != null ||
+    final hasServingData =
+        p.caloriesServing != null ||
         p.carbsServing != null ||
         p.proteinServing != null ||
         p.servingSize != null;
@@ -42,22 +42,16 @@ class _MacroCardState extends State<MacroCard> {
         ? (p.proteinServing ?? p.protein100g)
         : p.protein100g;
 
-    final carbs = _showServing
-        ? (p.carbsServing ?? p.carbs100g)
-        : p.carbs100g;
+    final carbs = _showServing ? (p.carbsServing ?? p.carbs100g) : p.carbs100g;
 
-    final fat = _showServing
-        ? (p.fatServing ?? p.fat100g)
-        : p.fat100g;
+    final fat = _showServing ? (p.fatServing ?? p.fat100g) : p.fat100g;
 
-    final fiber = _showServing
-        ? (p.fiberServing ?? p.fiber100g)
-        : p.fiber100g;
+    final fiber = _showServing ? (p.fiberServing ?? p.fiber100g) : p.fiber100g;
 
     final subtitle = _showServing
         ? (p.servingSize != null && p.servingSize!.isNotEmpty
-            ? 'Serving: ${p.servingSize}'
-            : 'Per Serving')
+              ? 'Serving: ${p.servingSize}'
+              : 'Per Serving')
         : 'Per 100g';
 
     return Container(
@@ -126,25 +120,25 @@ class _MacroCardState extends State<MacroCard> {
             children: [
               _buildMacroItem(
                 title: 'Calories',
-                value: calories != null ? '${calories.round()}' : '--',
+                value: calories != null ? calories.round().toString() : '--',
                 unit: 'kcal',
                 color: Colors.white,
               ),
               _buildMacroItem(
                 title: 'Protein',
-                value: protein != null ? '${protein.toStringAsFixed(1)}' : '--',
+                value: protein != null ? protein.toStringAsFixed(1) : '--',
                 unit: 'g',
                 color: const Color(0xFF38BDF8), // Cyan
               ),
               _buildMacroItem(
                 title: 'Carbs',
-                value: carbs != null ? '${carbs.toStringAsFixed(1)}' : '--',
+                value: carbs != null ? carbs.toStringAsFixed(1) : '--',
                 unit: 'g',
                 color: const Color(0xFFFBBF24), // Amber
               ),
               _buildMacroItem(
                 title: 'Fat',
-                value: fat != null ? '${fat.toStringAsFixed(1)}' : '--',
+                value: fat != null ? fat.toStringAsFixed(1) : '--',
                 unit: 'g',
                 color: const Color(0xFFF87171), // Coral
               ),
@@ -216,10 +210,7 @@ class _MacroCardState extends State<MacroCard> {
             const SizedBox(width: 2),
             Text(
               unit,
-              style: const TextStyle(
-                color: Color(0xFF64748B),
-                fontSize: 10,
-              ),
+              style: const TextStyle(color: Color(0xFF64748B), fontSize: 10),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../models/food_product.dart';
 import 'nova_chip.dart';
 
@@ -30,7 +31,7 @@ class ProductCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: hasFlags && product.novaGroup == 4
-              ? const Color(0xFFEF4444).withOpacity(0.4)
+              ? const Color(0xFFEF4444).withValues(alpha: 0.4)
               : const Color(0xFF334155),
           width: 1,
         ),
@@ -52,7 +53,8 @@ class ProductCard extends StatelessWidget {
                     width: 56,
                     height: 56,
                     color: const Color(0xFF0F172A),
-                    child: product.imageUrl != null && product.imageUrl!.isNotEmpty
+                    child:
+                        product.imageUrl != null && product.imageUrl!.isNotEmpty
                         ? CachedNetworkImage(
                             imageUrl: product.imageUrl!,
                             fit: BoxFit.cover,
@@ -95,16 +97,23 @@ class ProductCard extends StatelessWidget {
                           if (hasFlags) ...[
                             const SizedBox(width: 6),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEF4444).withOpacity(0.18),
+                                color: const Color(0xFFEF4444)
+                                    .withValues(alpha: 0.18),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.warning_amber_rounded,
-                                      size: 11, color: Color(0xFFEF4444)),
+                                  const Icon(
+                                    Icons.warning_amber_rounded,
+                                    size: 11,
+                                    color: Color(0xFFEF4444),
+                                  ),
                                   const SizedBox(width: 3),
                                   Text(
                                     '${product.flags.length} ${product.flags.length == 1 ? 'flag' : 'flags'}',
@@ -162,7 +171,10 @@ class ProductCard extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const Text(' • ', style: TextStyle(color: Color(0xFF64748B))),
+                            const Text(
+                              ' • ',
+                              style: TextStyle(color: Color(0xFF64748B)),
+                            ),
                           ],
                           Text(
                             timeText,
@@ -203,9 +215,19 @@ class ProductCard extends StatelessWidget {
                       value: 'delete',
                       child: Row(
                         children: [
-                          Icon(Icons.delete_outline_rounded, color: Color(0xFFEF4444), size: 18),
+                          Icon(
+                            Icons.delete_outline_rounded,
+                            color: Color(0xFFEF4444),
+                            size: 18,
+                          ),
                           SizedBox(width: 10),
-                          Text('Remove', style: TextStyle(color: Color(0xFFEF4444), fontSize: 14)),
+                          Text(
+                            'Remove',
+                            style: TextStyle(
+                              color: Color(0xFFEF4444),
+                              fontSize: 14,
+                            ),
+                          ),
                         ],
                       ),
                     ),

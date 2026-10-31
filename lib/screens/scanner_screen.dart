@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+
 import '../services/food_api_service.dart';
 import '../services/pantry_storage_service.dart';
 import '../widgets/scanner_hud_overlay.dart';
@@ -216,7 +217,10 @@ class _ScannerScreenState extends State<ScannerScreen>
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFF10B981), width: 1.5),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF10B981),
+                    width: 1.5,
+                  ),
                 ),
               ),
             ),
@@ -226,8 +230,16 @@ class _ScannerScreenState extends State<ScannerScreen>
               runSpacing: 6,
               children: [
                 _buildDemoBarcodeChip('Oreo', '044000032029', textController),
-                _buildDemoBarcodeChip('Cheerios', '016000275263', textController),
-                _buildDemoBarcodeChip('Coca-Cola', '049000028904', textController),
+                _buildDemoBarcodeChip(
+                  'Cheerios',
+                  '016000275263',
+                  textController,
+                ),
+                _buildDemoBarcodeChip(
+                  'Coca-Cola',
+                  '049000028904',
+                  textController,
+                ),
               ],
             ),
           ],
@@ -235,7 +247,10 @@ class _ScannerScreenState extends State<ScannerScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancel', style: TextStyle(color: Color(0xFF94A3B8))),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Color(0xFF94A3B8)),
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -249,7 +264,10 @@ class _ScannerScreenState extends State<ScannerScreen>
                 _handleBarcode(code);
               }
             },
-            child: const Text('Lookup', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Lookup',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -260,7 +278,10 @@ class _ScannerScreenState extends State<ScannerScreen>
   }
 
   Widget _buildDemoBarcodeChip(
-      String label, String code, TextEditingController controller) {
+    String label,
+    String code,
+    TextEditingController controller,
+  ) {
     return InkWell(
       onTap: () => controller.text = code,
       borderRadius: BorderRadius.circular(8),
@@ -286,16 +307,10 @@ class _ScannerScreenState extends State<ScannerScreen>
       body: Stack(
         children: [
           // 1. Camera Viewfinder
-          MobileScanner(
-            controller: _controller,
-            onDetect: _onDetect,
-          ),
+          MobileScanner(controller: _controller, onDetect: _onDetect),
 
           // 2. Tactical HUD Reticle Overlay
-          const ScannerHudOverlay(
-            scanBoxWidth: 280,
-            scanBoxHeight: 180,
-          ),
+          const ScannerHudOverlay(scanBoxWidth: 280, scanBoxHeight: 180),
 
           // 3. Top Controls Header
           SafeArea(
@@ -305,15 +320,22 @@ class _ScannerScreenState extends State<ScannerScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: const Color(0xFF334155)),
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.qr_code_scanner_rounded, color: Color(0xFF10B981), size: 16),
+                        Icon(
+                          Icons.qr_code_scanner_rounded,
+                          color: Color(0xFF10B981),
+                          size: 16,
+                        ),
                         SizedBox(width: 6),
                         Text(
                           'OPENGRUB SCANNER',
@@ -356,11 +378,17 @@ class _ScannerScreenState extends State<ScannerScreen>
               children: [
                 if (_isLoading) ...[
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF1E293B),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFF10B981), width: 1.5),
+                      border: Border.all(
+                        color: const Color(0xFF10B981),
+                        width: 1.5,
+                      ),
                     ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
@@ -390,14 +418,24 @@ class _ScannerScreenState extends State<ScannerScreen>
 
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1E293B).withOpacity(0.9),
+                    backgroundColor: const Color(0xFF1E293B)
+                        .withValues(alpha: 0.9),
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Color(0xFF334155)),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
                   ),
                   onPressed: _showManualEntryDialog,
-                  icon: const Icon(Icons.keyboard_alt_outlined, color: Color(0xFF38BDF8), size: 20),
+                  icon: const Icon(
+                    Icons.keyboard_alt_outlined,
+                    color: Color(0xFF38BDF8),
+                    size: 20,
+                  ),
                   label: const Text(
                     'Enter Barcode Manually',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
@@ -411,10 +449,13 @@ class _ScannerScreenState extends State<ScannerScreen>
     );
   }
 
-  Widget _buildHeaderButton({required IconData icon, required VoidCallback onPressed}) {
+  Widget _buildHeaderButton({
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         shape: BoxShape.circle,
         border: Border.all(color: const Color(0xFF334155)),
       ),

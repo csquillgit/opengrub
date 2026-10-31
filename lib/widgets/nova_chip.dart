@@ -4,17 +4,16 @@ class NovaChip extends StatelessWidget {
   final int? novaGroup;
   final bool compact;
 
-  const NovaChip({
-    super.key,
-    required this.novaGroup,
-    this.compact = false,
-  });
+  const NovaChip({super.key, required this.novaGroup, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
     if (novaGroup == null) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: compact ? 6 : 10, vertical: compact ? 2 : 4),
+        padding: EdgeInsets.symmetric(
+          horizontal: compact ? 6 : 10,
+          vertical: compact ? 2 : 4,
+        ),
         decoration: BoxDecoration(
           color: const Color(0xFF334155),
           borderRadius: BorderRadius.circular(8),
@@ -64,9 +63,9 @@ class NovaChip extends StatelessWidget {
         vertical: compact ? 3.5 : 4,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.18),
+        color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(compact ? 8 : 10),
-        border: Border.all(color: color.withOpacity(0.7), width: 1.2),
+        border: Border.all(color: color.withValues(alpha: 0.7), width: 1.2),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

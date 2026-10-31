@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import '../models/food_product.dart';
 import '../services/pantry_storage_service.dart';
 import '../widgets/flag_badge.dart';
@@ -50,11 +51,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_outline_rounded, color: Color(0xFFEF4444)),
+            icon: const Icon(
+              Icons.delete_outline_rounded,
+              color: Color(0xFFEF4444),
+            ),
             tooltip: 'Remove from Pantry',
             onPressed: () async {
+              final navigator = Navigator.of(context);
               await widget.storageService.deleteProduct(_product.barcode);
-              if (mounted) Navigator.of(context).pop();
+              if (!mounted) return;
+              navigator.pop();
             },
           ),
         ],
@@ -72,7 +78,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isUltraProcessed
-                      ? const Color(0xFFEF4444).withOpacity(0.5)
+                      ? const Color(0xFFEF4444).withValues(alpha: 0.5)
                       : const Color(0xFF334155),
                   width: 1.5,
                 ),
@@ -86,7 +92,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: 80,
                       height: 80,
                       color: const Color(0xFF0F172A),
-                      child: _product.imageUrl != null && _product.imageUrl!.isNotEmpty
+                      child:
+                          _product.imageUrl != null &&
+                              _product.imageUrl!.isNotEmpty
                           ? CachedNetworkImage(
                               imageUrl: _product.imageUrl!,
                               fit: BoxFit.cover,
@@ -180,13 +188,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF10B981).withOpacity(0.12),
+                  color: const Color(0xFF10B981).withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFF10B981).withOpacity(0.4)),
+                  border: Border.all(
+                    color: const Color(0xFF10B981).withValues(alpha: 0.4),
+                  ),
                 ),
                 child: const Row(
                   children: [
-                    Icon(Icons.check_circle_outline_rounded, color: Color(0xFF10B981), size: 22),
+                    Icon(
+                      Icons.check_circle_outline_rounded,
+                      color: Color(0xFF10B981),
+                      size: 22,
+                    ),
                     SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -228,7 +242,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 border: Border.all(color: const Color(0xFF334155)),
               ),
               child: Text(
-                _product.ingredientsText != null && _product.ingredientsText!.isNotEmpty
+                _product.ingredientsText != null &&
+                        _product.ingredientsText!.isNotEmpty
                     ? _product.ingredientsText!
                     : 'No detailed ingredient list available from open database.',
                 style: const TextStyle(
@@ -250,9 +265,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFF10B981).withOpacity(0.15),
+          color: const Color(0xFF10B981).withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFF10B981).withOpacity(0.5)),
+          border: Border.all(
+            color: const Color(0xFF10B981).withValues(alpha: 0.5),
+          ),
         ),
         child: const Row(
           children: [
@@ -261,7 +278,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               child: Text(
                 'NOVA 1: Whole Food / Minimal Processing. Real, single-ingredient or natural food state.',
-                style: TextStyle(color: Colors.white, fontSize: 13, height: 1.3),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  height: 1.3,
+                ),
               ),
             ),
           ],
@@ -271,9 +292,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFFEF4444).withOpacity(0.15),
+          color: const Color(0xFFEF4444).withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFEF4444).withOpacity(0.5)),
+          border: Border.all(
+            color: const Color(0xFFEF4444).withValues(alpha: 0.5),
+          ),
         ),
         child: const Row(
           children: [
@@ -282,7 +305,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               child: Text(
                 'NOVA 4: Ultra-Processed Formulation. Made using industrial extractions, additives, and high-intensity processing.',
-                style: TextStyle(color: Colors.white, fontSize: 13, height: 1.3),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  height: 1.3,
+                ),
               ),
             ),
           ],
@@ -292,9 +319,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: const Color(0xFFF59E0B).withOpacity(0.15),
+          color: const Color(0xFFF59E0B).withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFF59E0B).withOpacity(0.5)),
+          border: Border.all(
+            color: const Color(0xFFF59E0B).withValues(alpha: 0.5),
+          ),
         ),
         child: const Row(
           children: [
@@ -303,7 +332,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Expanded(
               child: Text(
                 'Moderately Processed: Culinary ingredients or simple preservation applied.',
-                style: TextStyle(color: Colors.white, fontSize: 13, height: 1.3),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  height: 1.3,
+                ),
               ),
             ),
           ],

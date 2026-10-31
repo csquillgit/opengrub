@@ -74,7 +74,7 @@ class _HudPainter extends CustomPainter {
     );
 
     // 1. Darkened outer background mask with cutout
-    final bgPaint = Paint()..color = Colors.black.withOpacity(0.55);
+    final bgPaint = Paint()..color = Colors.black.withValues(alpha: 0.55);
     final bgPath = Path()
       ..addRect(Rect.fromLTWH(0, 0, size.width, size.height))
       ..addRRect(RRect.fromRectAndRadius(boxRect, const Radius.circular(16)))
@@ -91,29 +91,61 @@ class _HudPainter extends CustomPainter {
     const cornerLen = 28.0;
 
     // Top-Left
-    canvas.drawLine(boxRect.topLeft, boxRect.topLeft + const Offset(cornerLen, 0), bracketPaint);
-    canvas.drawLine(boxRect.topLeft, boxRect.topLeft + const Offset(0, cornerLen), bracketPaint);
+    canvas.drawLine(
+      boxRect.topLeft,
+      boxRect.topLeft + const Offset(cornerLen, 0),
+      bracketPaint,
+    );
+    canvas.drawLine(
+      boxRect.topLeft,
+      boxRect.topLeft + const Offset(0, cornerLen),
+      bracketPaint,
+    );
 
     // Top-Right
-    canvas.drawLine(boxRect.topRight, boxRect.topRight + const Offset(-cornerLen, 0), bracketPaint);
-    canvas.drawLine(boxRect.topRight, boxRect.topRight + const Offset(0, cornerLen), bracketPaint);
+    canvas.drawLine(
+      boxRect.topRight,
+      boxRect.topRight + const Offset(-cornerLen, 0),
+      bracketPaint,
+    );
+    canvas.drawLine(
+      boxRect.topRight,
+      boxRect.topRight + const Offset(0, cornerLen),
+      bracketPaint,
+    );
 
     // Bottom-Left
-    canvas.drawLine(boxRect.bottomLeft, boxRect.bottomLeft + const Offset(cornerLen, 0), bracketPaint);
-    canvas.drawLine(boxRect.bottomLeft, boxRect.bottomLeft + const Offset(0, -cornerLen), bracketPaint);
+    canvas.drawLine(
+      boxRect.bottomLeft,
+      boxRect.bottomLeft + const Offset(cornerLen, 0),
+      bracketPaint,
+    );
+    canvas.drawLine(
+      boxRect.bottomLeft,
+      boxRect.bottomLeft + const Offset(0, -cornerLen),
+      bracketPaint,
+    );
 
     // Bottom-Right
-    canvas.drawLine(boxRect.bottomRight, boxRect.bottomRight + const Offset(-cornerLen, 0), bracketPaint);
-    canvas.drawLine(boxRect.bottomRight, boxRect.bottomRight + const Offset(0, -cornerLen), bracketPaint);
+    canvas.drawLine(
+      boxRect.bottomRight,
+      boxRect.bottomRight + const Offset(-cornerLen, 0),
+      bracketPaint,
+    );
+    canvas.drawLine(
+      boxRect.bottomRight,
+      boxRect.bottomRight + const Offset(0, -cornerLen),
+      bracketPaint,
+    );
 
     // 3. Sweeping Laser Beam
     final laserY = boxRect.top + (boxRect.height * laserProgress);
     final laserPaint = Paint()
       ..shader = LinearGradient(
         colors: [
-          const Color(0xFF10B981).withOpacity(0.0),
-          const Color(0xFF10B981).withOpacity(0.9),
-          const Color(0xFF10B981).withOpacity(0.0),
+          const Color(0xFF10B981).withValues(alpha: 0.0),
+          const Color(0xFF10B981).withValues(alpha: 0.9),
+          const Color(0xFF10B981).withValues(alpha: 0.0),
         ],
       ).createShader(Rect.fromLTWH(boxRect.left, laserY - 1, boxRect.width, 2))
       ..strokeWidth = 2.0;

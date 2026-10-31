@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../models/food_flag.dart';
 
 class FlagBadge extends StatelessWidget {
   final FoodFlag flag;
 
-  const FlagBadge({
-    super.key,
-    required this.flag,
-  });
+  const FlagBadge({super.key, required this.flag});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,6 @@ class FlagBadge extends StatelessWidget {
         icon = Icons.error_outline_rounded;
         break;
       case FlagSeverity.info:
-      default:
         color = const Color(0xFF38BDF8);
         icon = Icons.info_outline_rounded;
         break;
@@ -34,9 +31,9 @@ class FlagBadge extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.4), width: 1.2),
+        border: Border.all(color: color.withValues(alpha: 0.4), width: 1.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,14 +61,17 @@ class FlagBadge extends StatelessWidget {
               runSpacing: 4,
               children: flag.matchedTerms.map((term) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
+                    color: color.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     term,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
