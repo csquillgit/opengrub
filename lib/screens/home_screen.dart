@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/pantry_storage_service.dart';
+import '../widgets/tactical_legal_sheet.dart';
 import 'guide_screen.dart';
 import 'pantry_history_screen.dart';
 import 'scanner_screen.dart';
@@ -18,6 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      TacticalLegalSheet.checkFirstRun(context, openGrubLegal);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
